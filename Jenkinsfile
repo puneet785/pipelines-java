@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 git branch: 'main',
-                url : 'https://gitlab.com/puneet785/pipelines-java.git'
+                url : 'https://github.com/puneet785/pipelines-java.git'
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
