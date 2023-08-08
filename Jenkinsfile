@@ -34,7 +34,7 @@ pipeline {
                 )],
                 contextPath: 'servletjar11111',
                 onFailure: 'false',
-                var: '**/*.war'
+                war: '**/*.war'
             }
             post {
                 // If Maven was able to run the tests, even if some of the test
