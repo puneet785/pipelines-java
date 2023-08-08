@@ -28,7 +28,7 @@ pipeline {
             steps{
                 echo "Deploy stage"
                 deploy adapters: [tomcat9 (
-                       credentialsId: 'tom-deployment',
+                       credentialsId: 'tomcat_deploy_ui',
                        path: '',
                        url: 'http://168.62.165.69:8088'
                 )],
