@@ -23,28 +23,6 @@ pipeline {
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
 
             }
-        }
-        stage('Deploy'){
-            steps{
-                echo "Deploy stage"
-                deploy adapters: [tomcat9 (
-                       credentialsId: 'tom_deployment',
-                       path: '',
-                       url: 'http://168.62.165.69:8088/'
-                )],
-                contextPath: 'tomcathelloworld',
-                onFailure: 'false',
-                war: '**/*.war'
-            }
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.war'
-                }
-            }
-        }
-        
+        } 
     }
 }
