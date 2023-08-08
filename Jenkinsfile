@@ -32,7 +32,7 @@ pipeline {
                        path: '',
                        url: 'http://168.62.165.69:8088'
                 )],
-                contextPath: 'servletjar11111',
+                contextPath: 'tomcathelloworld',
                 onFailure: 'false',
                 war: '**/*.war'
             }
