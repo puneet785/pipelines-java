@@ -21,7 +21,7 @@ pipeline {
         }
         stage("Deploy"){
             steps{
-                echo "Deploy stage"
+                
                 deploy adapters: [tomcat9(
                     credentialsId: 'tomcat_credential',
                     path: '',
