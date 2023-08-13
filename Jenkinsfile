@@ -1,53 +1,63 @@
+Suite->Tests->Class->Methods
+
+
+
+Exam ques
+
+src target dir - shell scripting
+accept parameters
+copy src files to target directory.
+error checksums
+
+one bugfix hostfixing branches
+mergeconflict - git
+
+webhook trigger- gitlab
+
+maven project - maven
+verify the title of the project junit testcase
+data driven test
+
+
 pipeline {
     agent any
-    stages{
-        stage("Checkout"){
-            steps{
+
+    // tools {
+    //     // Install the Maven version configured as "M3" and add it to the path.
+    //     maven "M3"
+    // }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Get some code from a GitHub repository
                 git branch: 'main',
                 url : 'https://github.com/puneet785/pipelines-java.git'
-
             }
         }
-
-        stage("Build"){
+        stage('Build') {
             steps{
-            sh "mvn package"
-            }
-        }
+                  // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
-        stage("Install"){
-            steps{
-            sh "mvn install"
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+
             }
         }
-        
         stage('Deploy'){
             steps{
                 echo "Deploy stage"
                 deploy adapters: [tomcat9 (
-                       credentialsId: 'tomcat_credential',
+                       credentialsId: 'tom-deployment',
                        path: '',
-                        url: 'http://52.168.4.168:8088/',
+                        url: 'http://168.62.165.69:8088',
                 )],
-                contextPath: 'heypuneet',
+                contextPath: 'servletjar11111',
                 onFailure: 'false',
                 var: '**/*.war'
             }
             post {
-                always {
-        cleanWs()
-      }
-      failure {
-        steps {
-          slackSend baseUrl: 'https://hooks.slack.com/services/',
-          channel: '#build-failures',
-          iconEmoji: '',
-          message: "CI failing for - #${env.BRANCH_NAME} - ${currentBuild.currentResult}  (<${env.BUILD_URL}|Open>)",
-          teamDomain: 'differentau',
-          tokenCredentialId: 'slack-token-build-failures',
-          username: ''
-        }
-      }
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
                 success {
@@ -56,6 +66,6 @@ pipeline {
                 }
             }
         }
+        
     }
- 
 }
