@@ -1,23 +1,3 @@
-Suite->Tests->Class->Methods
-
-
-
-Exam ques
-
-src target dir - shell scripting
-accept parameters
-copy src files to target directory.
-error checksums
-
-one bugfix hostfixing branches
-mergeconflict - git
-
-webhook trigger- gitlab
-
-maven project - maven
-verify the title of the project junit testcase
-data driven test
-
 
 pipeline {
     agent any
