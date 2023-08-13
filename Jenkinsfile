@@ -34,6 +34,20 @@ pipeline {
                 var: '**/*.war'
             }
             post {
+                always {
+        cleanWs()
+      }
+      failure {
+        steps {
+          slackSend baseUrl: 'https://hooks.slack.com/services/',
+          channel: '#build-failures',
+          iconEmoji: '',
+          message: "CI failing for - #${env.BRANCH_NAME} - ${currentBuild.currentResult}  (<${env.BUILD_URL}|Open>)",
+          teamDomain: 'differentau',
+          tokenCredentialId: 'slack-token-build-failures',
+          username: ''
+        }
+      }
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
                 success {
