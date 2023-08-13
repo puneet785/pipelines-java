@@ -14,30 +14,33 @@ pipeline {
             sh "mvn package"
             }
         }
+
         stage("Install"){
             steps{
             sh "mvn install"
             }
         }
-        stage("Deploy"){
+        
+        stage('Deploy'){
             steps{
-                
-                deploy adapters: [tomcat9(
-                    credentialsId: 'tomcat_credential',
-                    path: '',
-                    url: 'http://52.168.4.168:8080/',
+                echo "Deploy stage"
+                deploy adapters: [tomcat9 (
+                       credentialsId: 'tomcat_credential',
+                       path: '',
+                        url: 'http://52.168.4.168:8088/',
                 )],
-                contextPath: 'heyPuneet',
+                contextPath: 'heypuneet',
                 onFailure: 'false',
-                var : '**/*.war'
+                var: '**/*.war'
             }
-            post{
-                success{
-                    junit '**/target/surfire-reports/TEST-*.xml'
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
                     archiveArtifacts 'target/*.war'
                 }
             }
-
         }
     }
  
