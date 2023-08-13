@@ -32,7 +32,7 @@ pipeline {
                 var : '**/*.war'
             }
             post{
-                sucess{
+                success{
                     junit '**/target/surfire-reports/TEST-*.xml'
                     archiveArtifacts 'target/*.war'
                 }
